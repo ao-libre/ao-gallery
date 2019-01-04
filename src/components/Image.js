@@ -52,7 +52,7 @@ class Image extends Component {
                         {this.props.image.name} -
                         {this.props.image.origin}
                     </div>
-                    <img width="200px" src={this.props.image.url}></img>
+                    <img alt={this.props.image.name} width="200px" src={this.props.image.url}></img>
                     <div>
                         {this.props.image.description}
                     </div>

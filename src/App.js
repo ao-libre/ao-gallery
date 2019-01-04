@@ -6,7 +6,15 @@ import Header from './components/Header'
 import Login from './components/Login'
 import Search from './components/Search'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import ImagesList from "./components/ImageList";
+import ImagesList from "./components/ImageList"
+// import Cloudinary from 'cloudinary-react'
+//
+//
+// Cloudinary.config({
+//     cloud_name: 'dlecejpdr',
+//     api_key: '314236643746361',
+//     api_secret: '3-R_nnhePpvhhIFY4cgheeZqeIw'
+// });
 
 class App extends Component {
   render() {
