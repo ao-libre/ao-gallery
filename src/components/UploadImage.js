@@ -29,12 +29,6 @@ class UploadImage extends Component {
         url: 'https://images-ext-1.discordapp.net/external/AnZ_BMquJnDopoHTL73MlvRJZSafnmUElJcUQirZl_A/https/cdn.discordapp.com/attachments/524822813757014038/524823005545758730/48375809_540916259757526_7276890577679941632_n.png'
     };
 
-    // constructor(props) {
-    //     super(props);
-    //
-    //     this.state = {
-    //     };
-    // }
     onImageDrop(files) {
         this.setState({
             uploadedFile: files[0]
@@ -88,24 +82,6 @@ class UploadImage extends Component {
                         type="text"
                         placeholder="Servidor en el cual fue creado el grafico"
                     />
-                    {/*<Dropzone onDrop={this.onImageDrop.bind(this)} accept="image/*" multiple={false}>*/}
-                        {/*{({getRootProps, getInputProps, isDragActive}) => {*/}
-                            {/*return (*/}
-                                {/*<div*/}
-                                    {/*{...getRootProps()}*/}
-                                {/*>*/}
-                                    {/*asd*/}
-                                    {/*<input {...getInputProps()} />*/}
-                                    {/*{*/}
-                                        {/*isDragActive ?*/}
-                                            {/*<p>Drop files here...</p> :*/}
-                                            {/*<p>Try dropping some files here, or click to select files to upload.</p>*/}
-                                    {/*}*/}
-                                {/*</div>*/}
-                            {/*)*/}
-                        {/*}}*/}
-                    {/*</Dropzone>*/}
-
 
                     <Dropzone
                         onDrop={this.onImageDrop.bind(this)}
@@ -132,15 +108,6 @@ class UploadImage extends Component {
                                 <img src={this.state.uploadedFileCloudinaryUrl} />
                             </div>}
                     </div>
-
-                    {/*// Or for more advanced usage:*/}
-                    {/*// import {CloudinaryContext, Transformation} from 'cloudinary-react';*/}
-                    {/*<CloudinaryContext cloudName="dlecejpdr">*/}
-                        {/*<Image publicId="sample">*/}
-                            {/*<Transformation width="200" crop="scale" angle="10"/>*/}
-                        {/*</Image>*/}
-                    {/*</CloudinaryContext>*/}
-
                 </div>
 
                 <Mutation

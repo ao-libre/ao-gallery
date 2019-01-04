@@ -19,12 +19,12 @@ export const IMAGES_LIST_QUERY = gql`
                     id
                     name
                 }
-#                votes {
-#                    id
-#                    user{
-#                         id
-#                    }
-#                }
+                #                votes {
+                #                    id
+                #                    user{
+                #                         id
+                #                    }
+                #                }
             }
         }
     }

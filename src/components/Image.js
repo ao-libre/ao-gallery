@@ -3,6 +3,7 @@ import { AUTH_TOKEN } from '../constants'
 import { timeDifferenceForDate } from '../utils'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
+import { Link } from "react-router-dom";
 
 const VOTE_MUTATION = gql`
     mutation VoteImageMutation($imageId: ID!) {
@@ -49,18 +50,23 @@ class Image extends Component {
                 </div>
                 <div className="ml1">
                     <div>
-                        {this.props.image.name} -
-                        {this.props.image.origin}
+                        <Link to={`/image/${this.props.image.id }`} className="ml1 no-underline black">
+                            {this.props.image.name}
+                            {this.props.image.id}
+                        </Link>
                     </div>
                     <img alt={this.props.image.name} width="200px" src={this.props.image.url}></img>
                     <div>
                         {this.props.image.description}
                     </div>
                     <div className="f6 lh-copy gray">
+                        Creado en server: {this.props.image.origin}
+                    </div>
+                    <div className="f6 lh-copy gray">
                         {/*{this.props.image.votes.length} votes | by{' '}*/}
-                        {this.props.image.uploadedBy
-                            ? this.props.image.uploadedBy.name
-                            : 'Unknown'}{' '}
+                        Subido por {this.props.image.uploadedBy
+                        ? this.props.image.uploadedBy.name
+                        : 'Unknown'}{' - '}
                         {timeDifferenceForDate(this.props.image.createdAt)}
                     </div>
                 </div>
