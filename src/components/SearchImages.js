@@ -1,64 +1,67 @@
 import React, { Component } from 'react'
 import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag'
-import Link from './Link'
+import Image from './Image'
 
-const FEED_SEARCH_QUERY = gql`
-    query FeedSearchQuery($filter: String!) {
-        feed(filter: $filter) {
-            links {
+const IMAGES_SEARCH_QUERY = gql`
+    query ImagesSearchQuery($filter: String!) {
+        imageList(filter: $filter) {
+            count
+            images {
                 id
+                name
                 url
-                description
                 createdAt
-                postedBy {
+                description
+                origin
+                uploadedBy {
                     id
                     name
                 }
-                votes {
-                    id
-                    user {
-                        id
-                    }
-                }
+#                votes {
+#                    id
+#                    user {
+#                        id
+#                    }
+#                }
             }
         }
     }
 `
 
-class Search extends Component {
+class SearchImages extends Component {
     state = {
-        links: [],
+        images: [],
         filter: ''
     }
 
     _executeSearch = async () => {
         const { filter } = this.state
         const result = await this.props.client.query({
-            query: FEED_SEARCH_QUERY,
+            query: IMAGES_SEARCH_QUERY,
             variables: { filter },
         })
-        const links = result.data.feed.links
-        this.setState({ links })
+        const images = result.data.imageList.images
+        this.setState({ images })
     }
 
     render() {
         return (
             <div>
                 <div>
-                    Search
+                    Search Image
                     <input
                         type='text'
                         onChange={e => this.setState({ filter: e.target.value })}
                     />
                     <button onClick={() => this._executeSearch()}>OK</button>
                 </div>
-                {this.state.links.map((link, index) => (
-                    <Link key={link.id} link={link} index={index} />
+                {this.state.images.map((image, index) => (
+                    <Image key={image.id} image={image} index={index} />
                 ))}
             </div>
         )
     }
 }
 
-export default withApollo(Search)
+export default withApollo(SearchImages)

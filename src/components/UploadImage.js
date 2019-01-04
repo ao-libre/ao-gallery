@@ -22,6 +22,7 @@ const IMAGE_MUTATION = gql`
 
 class UploadImage extends Component {
     state = {
+        category: 'A',
         uploadedFileCloudinaryUrl: '',
         name: '',
         description: '',
@@ -82,6 +83,12 @@ class UploadImage extends Component {
                         type="text"
                         placeholder="Servidor en el cual fue creado el grafico"
                     />
+
+                    <select value={this.state.optionsState}>
+                        <option value="A">Apple</option>
+                        <option value="B">Banana</option>
+                        <option value="C">Cranberry</option>
+                    </select>
 
                     <Dropzone
                         onDrop={this.onImageDrop.bind(this)}

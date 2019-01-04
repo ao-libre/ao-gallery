@@ -8,6 +8,7 @@ import Search from './components/Search'
 import ImagesList from "./components/ImageList"
 import ImageDetails from "./components/ImageDetails"
 import { Switch, Route, Redirect } from 'react-router-dom'
+import SearchImages from "./components/SearchImages";
 
 class App extends Component {
     render() {
@@ -25,6 +26,7 @@ class App extends Component {
                         <Route exact path='/new/:page' component={LinkList}/>
                         <Route exact path='/gallery/:page' component={ImagesList}/>
                         <Route exact path='/image/:id' component={ImageDetails}/>
+                        <Route exact path='/searchimages' component={SearchImages}/>
                     </Switch>
                 </div>
             </div>

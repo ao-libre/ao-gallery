@@ -14,6 +14,7 @@ const IMAGE_GET_BY_ID = gql`
             origin
             url
             uploadedBy {
+                id
                 name
             }
             createdAt
