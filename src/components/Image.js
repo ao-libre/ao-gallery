@@ -5,7 +5,7 @@ import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { Link } from "react-router-dom";
 
-const VOTE_MUTATION = gql`
+const VOTE_IMAGE_MUTATION = gql`
     mutation VoteImageMutation($imageId: ID!) {
         voteImage(imageId: $imageId) {
             id
@@ -24,7 +24,6 @@ const VOTE_MUTATION = gql`
     }
 `
 
-
 class Image extends Component {
     render() {
         const authToken = localStorage.getItem(AUTH_TOKEN)
@@ -34,14 +33,14 @@ class Image extends Component {
                     <span className="gray">{this.props.index + 1}.</span>
                     {authToken && (
                         <Mutation
-                            mutation={VOTE_MUTATION}
+                            mutation={VOTE_IMAGE_MUTATION}
                             variables={{ imageId: this.props.image.id }}
-                            update={(store, { data: { vote } }) =>
-                                this.props.updateStoreAfterVote(store, vote, this.props.image.id)
+                            update={(store, { data: { voteImage } }) =>
+                                this.props.updateStoreAfterVote(store, voteImage, this.props.image.id)
                             }
                         >
-                            {voteImage => (
-                                <div className="ml1 gray f11" onClick={voteImage}>
+                            {voteImageMutation => (
+                                <div className="ml1 gray f11" onClick={voteImageMutation}>
                                     ▲
                                 </div>
                             )}
@@ -63,10 +62,10 @@ class Image extends Component {
                         Creado en server: {this.props.image.origin}
                     </div>
                     <div className="f6 lh-copy gray">
-                        {/*{this.props.image.votes.length} votes | by{' '}*/}
+                        {this.props.image.votes.length} votes |
                         Subido por {this.props.image.uploadedBy
                         ? this.props.image.uploadedBy.name
-                        : 'Unknown'}{' - '}
+                        : 'Unknown'}{' | '}
                         {timeDifferenceForDate(this.props.image.createdAt)}
                     </div>
                 </div>

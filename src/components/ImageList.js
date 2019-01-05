@@ -19,12 +19,37 @@ export const IMAGES_LIST_QUERY = gql`
                     id
                     name
                 }
-                #                votes {
-                #                    id
-                #                    user{
-                #                         id
-                #                    }
-                #                }
+                votes {
+                    id
+                    user{
+                        id
+                    }
+                }
+            }
+        }
+    }
+`
+
+const NEW_IMAGES_SUBSCRIPTION = gql`
+    subscription {
+        newImage {
+            node {
+                id
+                name
+                url
+                createdAt
+                description
+                origin
+                uploadedBy {
+                    id
+                    name
+                }
+                votes {
+                    id
+                    user{
+                        id
+                    }
+                }
             }
         }
     }
@@ -33,20 +58,20 @@ export const IMAGES_LIST_QUERY = gql`
 
 class ImagesList extends Component {
 
-    _updateCacheAfterVote = (store, createVote, linkId) => {
-        const isNewPage = this.props.location.pathname.includes('new')
+    _updateCacheAfterVote = (store, createVoteImage, imageId) => {
+        const isGallery = this.props.location.pathname.includes('gallery')
         const page = parseInt(this.props.match.params.page, 10)
 
-        const skip = isNewPage ? (page - 1) * IMAGES_PER_PAGE : 0
-        const first = isNewPage ? IMAGES_PER_PAGE : 100
-        const orderBy = isNewPage ? 'createdAt_DESC' : null
+        const skip = isGallery ? (page - 1) * IMAGES_PER_PAGE : 0
+        const first = isGallery ? IMAGES_PER_PAGE : 100
+        const orderBy = isGallery ? 'createdAt_DESC' : null
         const data = store.readQuery({
             query: IMAGES_LIST_QUERY,
             variables: { first, skip, orderBy }
         });
 
-        const votedLink = data.imageList.links.find(link => link.id === linkId)
-        votedLink.votes = createVote.link.votes
+        const votedImage = data.imageList.images.find(image => image.id === imageId)
+        votedImage.votes = createVoteImage.image.votes
         store.writeQuery({ query: IMAGES_LIST_QUERY, data })
     };
 
@@ -87,6 +112,24 @@ class ImagesList extends Component {
         }
     };
 
+    _subscribeToNewImages = subscribeToMore => {
+        subscribeToMore({
+            document: NEW_IMAGES_SUBSCRIPTION,
+            updateQuery: (prev, { subscriptionData }) => {
+                if (!subscriptionData.data) return prev
+                const newImage = subscriptionData.data.newImage.node
+
+                return Object.assign({}, prev, {
+                    feed: {
+                        images: [newImage, ...prev.imageList.images],
+                        count: prev.imageList.images.length + 1,
+                        __typename: prev.imageList.__typename
+                    }
+                })
+            }
+        })
+    }
+
     render() {
         return (
             <Query query={IMAGES_LIST_QUERY} variables={this._getQueryVariables()}>
@@ -94,7 +137,7 @@ class ImagesList extends Component {
                     if (loading) return <div>Fetching</div>;
                     if (error) return <div>Error</div>;
 
-                    // this._subscribeToNewLinks(subscribeToMore)
+                    this._subscribeToNewImages(subscribeToMore)
                     // this._subscribeToNewVotes(subscribeToMore)
 
                     const imagesToRender = this._getImagesToRender(data);
@@ -110,7 +153,7 @@ class ImagesList extends Component {
                                     key={image.id}
                                     image={image}
                                     index={index}
-                                    // updateStoreAfterVote={this._updateCacheAfterVote}
+                                    updateStoreAfterVote={this._updateCacheAfterVote}
                                 />
                             ))}
                             {isGallery && (

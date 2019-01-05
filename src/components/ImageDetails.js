@@ -10,14 +10,20 @@ const IMAGE_GET_BY_ID = gql`
         {
             id
             name
+            url
+            createdAt
             description
             origin
-            url
             uploadedBy {
                 id
                 name
             }
-            createdAt
+            votes {
+                id
+                user{
+                    id
+                }
+            }
         }
     }
 `
@@ -54,7 +60,7 @@ class ImageDetails extends Component {
                                         Creado en server: {data.image.origin}
                                     </div>
                                     <div className="f6 lh-copy gray">
-                                        {/*{data.image.votes.length} votes | by{' '}*/}
+                                        {data.image.votes.length} votes |
                                         Subido por {data.image.uploadedBy
                                         ? data.image.uploadedBy.name
                                         : 'Unknown'}{' - '}
