@@ -8,21 +8,21 @@ function timeDifference(current, previous) {
     const elapsed = current - previous
 
     if (elapsed < milliSecondsPerMinute / 3) {
-        return 'just now'
+        return 'recien'
     }
 
     if (elapsed < milliSecondsPerMinute) {
-        return 'less than 1 min ago'
+        return 'menos de 1 minuto'
     } else if (elapsed < milliSecondsPerHour) {
-        return Math.round(elapsed / milliSecondsPerMinute) + ' min ago'
+        return Math.round(elapsed / milliSecondsPerMinute) + ' mins'
     } else if (elapsed < milliSecondsPerDay) {
-        return Math.round(elapsed / milliSecondsPerHour) + ' h ago'
+        return Math.round(elapsed / milliSecondsPerHour) + ' horas'
     } else if (elapsed < milliSecondsPerMonth) {
-        return Math.round(elapsed / milliSecondsPerDay) + ' days ago'
+        return Math.round(elapsed / milliSecondsPerDay) + ' dias'
     } else if (elapsed < milliSecondsPerYear) {
-        return Math.round(elapsed / milliSecondsPerMonth) + ' mo ago'
+        return Math.round(elapsed / milliSecondsPerMonth) + ' meses'
     } else {
-        return Math.round(elapsed / milliSecondsPerYear) + ' years ago'
+        return Math.round(elapsed / milliSecondsPerYear) + ' años'
     }
 }
 

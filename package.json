@@ -15,6 +15,7 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.2",
+    "react-select": "^2.2.0",
     "subscriptions-transport-ws": "^0.9.15",
     "superagent": "^4.1.0"
   },

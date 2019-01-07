@@ -134,10 +134,10 @@ class ImagesList extends Component {
         return (
             <Query query={IMAGES_LIST_QUERY} variables={this._getQueryVariables()}>
                 {({ loading, error, data, subscribeToMore }) => {
-                    if (loading) return <div>Fetching</div>;
+                    if (loading) return <div>Cargando...</div>;
                     if (error) return <div>Error</div>;
 
-                    this._subscribeToNewImages(subscribeToMore)
+                    // this._subscribeToNewImages(subscribeToMore)
                     // this._subscribeToNewVotes(subscribeToMore)
 
                     const imagesToRender = this._getImagesToRender(data);
@@ -148,24 +148,55 @@ class ImagesList extends Component {
 
                     return (
                         <Fragment>
-                            {imagesToRender.map((image, index) => (
-                                <Image
-                                    key={image.id}
-                                    image={image}
-                                    index={index}
-                                    updateStoreAfterVote={this._updateCacheAfterVote}
-                                />
-                            ))}
-                            {isGallery && (
-                                <div className="flex ml4 mv3 gray">
-                                    <div className="pointer mr2" onClick={this._previousPage}>
-                                        Previous
-                                    </div>
-                                    <div className="pointer" onClick={() => this._nextPage(data)}>
-                                        Next
+                            <div className="nk-box text-white">
+                                <div className="nk-gap-4"></div>
+                                <div className="container">
+                                    <div className="text-center">
+                                        <h3 className="nk-title-back">Graficos</h3>
+                                        <h2 className="nk-title h1">Armaduras, Armas, Cuerpos, Cabezas, Ambientacion, Items</h2>
+                                        <div className="nk-title-sep-icon">
+                                            <span className="icon"><span className="ion-fireball"></span></span>
+                                        </div>
                                     </div>
                                 </div>
-                            )}
+                            </div>
+
+                            <div className="container">
+                                <div className="nk-blog-grid-3">
+                                    {imagesToRender.map((image, index) => (
+                                        <Image
+                                            key={image.id}
+                                            image={image}
+                                            index={index}
+                                            updateStoreAfterVote={this._updateCacheAfterVote}
+                                        />
+                                    ))}
+                                </div>
+
+                                {isGallery && (
+                                    <div className="nk-pagination nk-pagination-center">
+                                        <a href="" className="nk-pagination-prev">
+                                            <span className="nk-icon-arrow-left" onClick={this._previousPage}></span>
+                                        </a>
+                                        <nav>
+                                        <span>Viendo Imagenes {this.props.match.params.page} a {pageIndex}</span>
+
+                                            {/*<a href="#">1</a>*/}
+                                        {/*<a href="#">2</a>*/}
+                                        {/*<a className="nk-pagination-current-white" href="#">3</a>*/}
+                                        {/*<span>...</span>*/}
+                                        {/*<a href="#">14</a>*/}
+                                        </nav>
+                                        <a href="" className="nk-pagination-next">
+                                            <span className="nk-icon-arrow-right" onClick={() => this._nextPage(data)}></span>
+                                        </a>
+                                    </div>
+                                )}
+
+
+                                <div className="nk-gap-4"></div>
+                                <div className="nk-gap-3"></div>
+                            </div>
                         </Fragment>
                     )
                 }}

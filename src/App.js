@@ -13,9 +13,9 @@ import SearchImages from "./components/SearchImages";
 class App extends Component {
     render() {
         return (
-            <div className="center w85">
+            <div>
                 <Header/>
-                <div className="ph3 pv1 background-gray">
+                <div className="nk-main">
                     <Switch>
                         <Route exact path='/' render={() => <Redirect to='/gallery/1'/>}/>
                         <Route exact path="/uploadimage" component={UploadImage}/>

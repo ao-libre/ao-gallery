@@ -3,11 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
-    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.2.1/css/tachyons.min.css"/>
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <!--<link rel="stylesheet" href="https://unpkg.com/tachyons@4.2.1/css/tachyons.min.css"/>-->
+
+    <meta name="view
+    port" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="theme-color" content="#000000" />
     <!--
       manifest.json provides metadata used when your web app is added to the
@@ -23,20 +22,164 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+
+    <!-- START: Styles -->
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300i,400,400i,700%7cMarcellus+SC" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- FontAwesome -->
+    <script defer src="/assets/vendor/fontawesome-free/js/all.js"></script>
+    <script defer src="/assets/vendor/fontawesome-free/js/v4-shims.js"></script>
+
+    <!-- IonIcons -->
+    <link rel="stylesheet" href="/assets/vendor/ionicons/css/ionicons.min.css">
+
+    <!-- Revolution Slider -->
+    <link rel="stylesheet" href="/assets/vendor/revolution/css/settings.css">
+    <link rel="stylesheet" href="/assets/vendor/revolution/css/layers.css">
+    <link rel="stylesheet" href="/assets/vendor/revolution/css/navigation.css">
+
+    <!-- Flickity -->
+    <link rel="stylesheet" href="/assets/vendor/flickity/dist/flickity.min.css">
+
+    <!-- Photoswipe -->
+    <link rel="stylesheet" href="/assets/vendor/photoswipe/dist/photoswipe.css">
+    <link rel="stylesheet" href="/assets/vendor/photoswipe/dist/default-skin/default-skin.css">
+
+    <!-- DateTimePicker -->
+    <link rel="stylesheet" href="/assets/vendor/jquery-datetimepicker/build/jquery.datetimepicker.min.css">
+
+    <!-- Summernote -->
+    <link rel="stylesheet" href="/assets/vendor/summernote/dist/summernote-bs4.css">
+
+    <!-- GODLIKE -->
+    <link rel="stylesheet" href="/assets/css/godlike.css">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/assets/css/custom.css">
+
+    <!-- END: Styles -->
+
+    <!-- jQuery -->
+    <script src="/assets/vendor/jquery/dist/jquery.min.js"></script>
+
+
+    <title>Recursos Argentum Online</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+
+    <!-- START: Page Preloader -->
+    <div class="nk-preloader">
+      <!--
+           Preloader animation
+           data-close-... data used for closing preloader
+           data-open-...  data used for opening preloader
+      -->
+      <div class="nk-preloader-bg"
+           style="background-color: #000;"
+           data-close-frames="23"
+           data-close-speed="1.2"
+           data-close-sprites="./assets/images/preloader-bg.png"
+           data-open-frames="23"
+           data-open-speed="1.2"
+           data-open-sprites="./assets/images/preloader-bg-bw.png">
+      </div>
+
+      <div class="nk-preloader-content">
+        <div>
+          <img class="nk-img" src="/assets/images/logo.png" alt="GodLike - Gaming Bootstrap 4 Template" width="170">
+          <div class="nk-preloader-animation"></div>
+        </div>
+      </div>
+
+      <div class="nk-preloader-skip">Skip</div>
+    </div>
+    <!-- END: Page Preloader -->
+
+    <!-- START: Page Border -->
+    <div class="nk-page-border">
+      <div class="nk-page-border-t"></div>
+      <div class="nk-page-border-r"></div>
+      <div class="nk-page-border-b"></div>
+      <div class="nk-page-border-l"></div>
+    </div>
+    <!-- END: Page Border -->
+
     <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+    START: Page Video Background
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
+    Additional Attributes:
+    data-video - Youtube/Vimeo/self-hosted video urls.
+        self-hosted video example:
+        data-video="mp4:./video/local-video.mp4,webm:./video/local-video.webm,ogv:./video/local-video.ogv"
+    data-video-loop - loop video (true/false)
+    data-video-mute - mute video music (true/false)
+    data-video-volume - volume of video music (0-100)
+    data-video-start-time - video start time in seconds
+    data-video-end-time - video end time in seconds
+    data-video-pause-on-page-leave - pause video when the page not in focus (true/false)
     -->
+    <div class="nk-page-background op-5" style="background-image: url('/assets/images/page-background.jpg');"></div>
+    <!-- END: Page Background -->
+
+
+
+
+    <div id="root"></div>
+
+
+    <!-- START: Footer -->
+    <!--
+        Additional Classes:
+            .nk-footer-parallax
+            .nk-footer-parallax-opacity
+    -->
+    <footer class="nk-footer nk-footer-parallax nk-footer-parallax-opacity">
+      <img class="nk-footer-top-corner" src="/assets/images/footer-corner.png" alt="">
+
+      <div class="container">
+        <div class="nk-gap-2"></div>
+
+        <p>
+          Argentum Online Libre no es propietario de ninguno de los graficos, esta es simplemente una fuenta centralizada donde todos los usuarios de AO pueden compartir sus graficos de manera facil y conveniente.
+        </p>
+
+        <p>
+          Argentum Online fue liberado en el año 2003 bajo la licencia GNU GPL, por lo tanto todas los recursos y modificaciones (incluyendo graficos) estan bajo la misma licencia.
+        </p>
+
+        <div class="nk-footer-links">
+          <img class="nk-img" src="http://www.gnu.org/graphics/agplv3-155x51.png" alt="" width="120">
+          <a href="https://www.gnu.org/licenses/agpl.html" target="_blank" class="link-effect">Terminos y Condiciones de la Licencia</a>
+        </div>
+
+        <div class="nk-gap-4"></div>
+      </div>
+    </footer>
+    <!-- END: Footer -->
+
+
+
+
+    <!-- START: Scripts -->
+
+    <!-- GSAP -->
+    <script src="/assets/vendor/gsap/src/minified/TweenMax.min.js"></script>
+    <!--<script src="/assets/vendor/gsap/src/minified/plugins/ScrollToPlugin.min.js"></script>-->
+
+    <!-- Bootstrap -->
+    <script src="/assets/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- GODLIKE -->
+    <script src="/assets/js/godlike.min.js"></script>
+    <script src="/assets/js/godlike-init.js"></script>
+    <!-- END: Scripts -->
+
+
   </body>
 </html>

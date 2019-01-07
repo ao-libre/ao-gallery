@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withApollo } from 'react-apollo'
+import { Mutation, withApollo } from 'react-apollo'
 import gql from 'graphql-tag'
 import Image from './Image'
 
@@ -18,12 +18,12 @@ const IMAGES_SEARCH_QUERY = gql`
                     id
                     name
                 }
-#                votes {
-#                    id
-#                    user {
-#                        id
-#                    }
-#                }
+                votes {
+                    id
+                    user {
+                        id
+                    }
+                }
             }
         }
     }
@@ -49,16 +49,37 @@ class SearchImages extends Component {
         return (
             <div>
                 <div>
-                    Search Image
-                    <input
-                        type='text'
-                        onChange={e => this.setState({ filter: e.target.value })}
-                    />
-                    <button onClick={() => this._executeSearch()}>OK</button>
+                    <div className="nk-box-3 bg-dark-1">
+                        <h2 className="nk-title h3 text-center">Buscar Graficos</h2>
+                        <h5 className="nk-title h5 text-center">Por nombre, descripcion o categoria</h5>
+                        <div className="nk-gap-1"></div>
+
+                        <input
+                            className="form-control required"
+                            type='text'
+                            onChange={e => this.setState({ filter: e.target.value })}
+                        />
+
+                        <button className="nk-btn nk-btn-x2 nk-btn-block nk-btn-rounded nk-btn-color-main-2"
+                                onClick={() => this._executeSearch()}>Enviar
+                        </button>
+                        <div className="nk-gap-1"></div>
+
+                    </div>
                 </div>
-                {this.state.images.map((image, index) => (
-                    <Image key={image.id} image={image} index={index} />
-                ))}
+
+                <div className="container">
+                    <div className="nk-blog-grid-3">
+
+                        {this.state.images.map((image, index) => (
+                            <Image key={image.id}
+                                   image={image}
+                                   index={index}
+                            />
+                        ))}
+
+                    </div>
+                </div>
             </div>
         )
     }

@@ -1,65 +1,77 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router'
-import { AUTH_TOKEN } from '../constants'
+import { AUTH_TOKEN, REDDIT_URL, DISCORD_URL } from '../constants'
 
 class Header extends Component {
     render() {
         const authToken = localStorage.getItem(AUTH_TOKEN)
+
         return (
-            <div className="flex pa1 justify-between nowrap orange">
-                <div className="flex flex-fixed black">
-                    <div className="fw7 mr1">AO Graficos</div>
-                    <Link to="/" className="ml1 no-underline black">
-                        new
-                    </Link>
-                    <div className="ml1">|</div>
-                    <Link to="/gallery/1" className="ml1 no-underline black">
-                        Galeria
-                    </Link>
-                    <div className="ml1">|</div>
-                    <Link to="/uploadimage" className="ml1 no-underline black">
-                        Subir Grafico
-                    </Link>
-                    <div className="ml1">|</div>
-                    <Link to="/search" className="ml1 no-underline black">
-                        search
-                    </Link>
-                    <div className="ml1">|</div>
-                    <Link to="/top" className="ml1 no-underline black">
-                        top
-                    </Link>
-                    <div className="ml1">|</div>
-                    <Link to="/searchimages" className="ml1 no-underline black">
-                        Buscar Graficos
-                    </Link>
-                    {authToken && (
-                        <div className="flex">
-                            <div className="ml1">|</div>
-                            <Link to="/create" className="ml1 no-underline black">
-                                submit
+            <header className="nk-header nk-header-opaque">
+
+                <div className="nk-contacts-top">
+                    <div className="container">
+                        <div className="nk-contacts-left">
+                            <div className="nk-navbar">
+                                <ul className="nk-nav">
+                                    <li><a href={REDDIT_URL}>Foro</a></li>
+                                    <li><a href={DISCORD_URL}>Chat</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div className="nk-contacts-right">
+                            <div className="nk-navbar">
+                                <ul className="nk-nav">
+                                    <li><a href="https://twitter.com/AOLibre" target="_blank"><span className="ion-social-twitter"></span></a></li>
+                                    <li><a href="https://www.facebook.com/argentumoficial/" target="_blank"><span className="ion-social-facebook"></span></a></li>
+                                    <li><a href="https://www.instagram.com/argentumonlinelibre/" target="_blank"><span className="ion-social-instagram-outline"></span></a></li>
+                                    <li><a href="https://github.com/ao-libre" target="_blank"><span className="ion-social-github"></span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <nav className="nk-navbar nk-navbar-top nk-navbar-sticky nk-navbar-autohide">
+                    <div className="container">
+                        <div className="nk-nav-table">
+
+                            <Link to="/" className="nk-nav-logo">
+                                <img src="/assets/images/logo.png" alt="" width="90"/>
                             </Link>
+
+
+                            <ul className="nk-nav nk-nav-right d-lg-block" data-nav-mobile="#nk-nav-mobile">
+                                <Link to="/"> Home </Link> |
+                                {/*<Link to="/gallery/1"> Galeria </Link> |*/}
+                                <Link to="/searchimages"> Buscar </Link> |
+                                <Link to="/top"> Top Graficos </Link> |
+
+                                {authToken && (
+                                    <Link to="/uploadimage"> Subir Grafico </Link>
+                                )}
+
+                                {authToken ? (
+                                    <a
+                                        onClick={() => {
+                                            localStorage.removeItem(AUTH_TOKEN)
+                                            this.props.history.push(`/`)
+                                        }}
+                                    >
+                                        | Salir
+                                    </a>
+                                ) : (
+                                    <Link to="/login"> Login</Link>
+                                )}
+
+                            </ul>
+
                         </div>
-                    )}
-                </div>
-                <div className="flex flex-fixed">
-                    {authToken ? (
-                        <div
-                            className="ml1 pointer black"
-                            onClick={() => {
-                                localStorage.removeItem(AUTH_TOKEN)
-                                this.props.history.push(`/`)
-                            }}
-                        >
-                            logout
-                        </div>
-                    ) : (
-                        <Link to="/login" className="ml1 no-underline black">
-                            login
-                        </Link>
-                    )}
-                </div>
-            </div>
+                    </div>
+                </nav>
+
+            </header>
         )
     }
 
