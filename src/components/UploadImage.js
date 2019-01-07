@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { IMAGES_LIST_QUERY } from './ImageList'
-import { IMAGES_PER_PAGE, CLOUDINARY_UPLOAD_PRESET, CLOUDINARY_UPLOAD_URL } from '../constants'
+import { IMAGES_PER_PAGE } from '../constants'
 // import { CloudinaryContext, Transformation, Image } from 'cloudinary-react'
 import Dropzone from 'react-dropzone'
 import request from 'superagent'
@@ -39,8 +39,8 @@ class UploadImage extends Component {
     }
 
     handleImageUpload(file) {
-        let upload = request.post(CLOUDINARY_UPLOAD_URL)
-            .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+        let upload = request.post(process.env.REACT_APP_CLOUDINARY_UPLOAD_URL)
+            .field('upload_preset', process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET)
             .field('file', file);
 
         upload.end((err, response) => {
@@ -61,6 +61,7 @@ class UploadImage extends Component {
         const { name, description, origin, url } = this.state
         return (
             <div>
+                {process.env.REACT_APP_CLOUDINARY_UPLOAD_URL}
                 <div className="flex flex-column mt3">
                     <input
                         className="mb2"
