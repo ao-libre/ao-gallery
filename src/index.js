@@ -14,7 +14,7 @@ import { getMainDefinition } from 'apollo-utilities'
 import { AUTH_TOKEN } from './constants'
 
 const httpLink = createHttpLink({
-    uri: 'http://localhost:4000'
+    uri: process.env.REACT_APP_PRISMA_HTTP_LINK
 })
 
 const authLink = setContext((_, { headers }) => {
@@ -28,7 +28,7 @@ const authLink = setContext((_, { headers }) => {
 })
 
 const wsLink = new WebSocketLink({
-  uri: `ws://localhost:4000`,
+  uri: process.env.REACT_APP_PRISMA_WS_LINK,
   options: {
     reconnect: true,
     connectionParams: {
