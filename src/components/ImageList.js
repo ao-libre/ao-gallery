@@ -153,7 +153,8 @@ class ImagesList extends Component {
                                 <div className="container">
                                     <div className="text-center">
                                         <h3 className="nk-title-back">Graficos</h3>
-                                        <h2 className="nk-title h1">Armaduras, Armas, Cuerpos, Cabezas, Ambientacion, Items</h2>
+                                        <h2 className="nk-title h1">Armaduras, Armas, Cuerpos, Cabezas, Ambientacion,
+                                            Items</h2>
                                         <div className="nk-title-sep-icon">
                                             <span className="icon"><span className="ion-fireball"></span></span>
                                         </div>
@@ -175,21 +176,20 @@ class ImagesList extends Component {
 
                                 {isGallery && (
                                     <div className="nk-pagination nk-pagination-center">
-                                        <a href="" className="nk-pagination-prev">
-                                            <span className="nk-icon-arrow-left" onClick={this._previousPage}></span>
-                                        </a>
+                                        <span className="nk-pagination-prev nk-icon-arrow-left"
+                                              onClick={this._previousPage}></span>
                                         <nav>
-                                        <span>Viendo Imagenes {this.props.match.params.page} a {pageIndex}</span>
+                                            <span>Viendo Imagenes {this.props.match.params.page} a {pageIndex}</span>
 
                                             {/*<a href="#">1</a>*/}
-                                        {/*<a href="#">2</a>*/}
-                                        {/*<a className="nk-pagination-current-white" href="#">3</a>*/}
-                                        {/*<span>...</span>*/}
-                                        {/*<a href="#">14</a>*/}
+                                            {/*<a href="#">2</a>*/}
+                                            {/*<a className="nk-pagination-current-white" href="#">3</a>*/}
+                                            {/*<span>...</span>*/}
+                                            {/*<a href="#">14</a>*/}
                                         </nav>
-                                        <a href="" className="nk-pagination-next">
-                                            <span className="nk-icon-arrow-right" onClick={() => this._nextPage(data)}></span>
-                                        </a>
+
+                                        <span className="nk-pagination-next nk-icon-arrow-right"
+                                              onClick={() => this._nextPage(data)}></span>
                                     </div>
                                 )}
 

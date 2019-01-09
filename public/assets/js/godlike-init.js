@@ -94,8 +94,8 @@ var options = {
     enableActionLikeAnimation: true,
     enableShortcuts: true,
     enableFadeBetweenPages: true,
-    enableMouseParallax: true,
-    enableCookieAlert: true,
+    enableMouseParallax: false,
+    enableCookieAlert: false,
     scrollToAnchorSpeed: 700,
     parallaxSpeed: 0.6,
 
