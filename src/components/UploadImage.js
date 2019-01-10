@@ -11,13 +11,14 @@ import Select from 'react-select';
 const Checkbox = props => <input type="checkbox" {...props} />;
 
 const IMAGE_MUTATION = gql`
-    mutation ImageMutation($name: String!, $description: String!, $origin: String!, $url: String!) {
-        uploadImage(name: $name, description: $description, origin: $origin, url: $url) {
+    mutation ImageMutation($name: String!, $description: String!, $origin: String!, $url: String!, $urls: [String!]!) {
+        uploadImage(name: $name, description: $description, origin: $origin, url: $url, urls: $urls) {
             id
             name
             createdAt
             origin
             url
+            urls
             description
         }
     }
@@ -27,11 +28,12 @@ class UploadImage extends Component {
     state = {
         selectedObjTypeOption: null,
         selectedPotionTypeOption: null,
-        uploadedFileCloudinaryUrl: '',
+        uploadedFileCloudinaryUrl: [],
         name: '',
         description: '',
         origin: '',
-        url: 'https://images-ext-1.discordapp.net/external/AnZ_BMquJnDopoHTL73MlvRJZSafnmUElJcUQirZl_A/https/cdn.discordapp.com/attachments/524822813757014038/524823005545758730/48375809_540916259757526_7276890577679941632_n.png',
+        url: 'asd',
+        urls: [],
         objType: '',
         tipoPocion: '',
         razaEnanaAnim: '',
@@ -106,10 +108,12 @@ class UploadImage extends Component {
 
     onImageDrop(files) {
         this.setState({
-            uploadedFile: files[0]
+            uploadedFile: files
         });
 
-        this.handleImageUpload(files[0]);
+        files.forEach(file => {
+            this.handleImageUpload(file);
+        })
     }
 
     handleImageUpload(file) {
@@ -123,9 +127,15 @@ class UploadImage extends Component {
             }
 
             if (response.body.secure_url !== '') {
-                this.setState({
-                    uploadedFileCloudinaryUrl: response.body.secure_url,
-                    url: response.body.secure_url,
+                this.setState(state => {
+
+                    const urls = state.urls.concat(response.body.secure_url);
+                    const uploadedFileCloudinaryUrl = state.uploadedFileCloudinaryUrl.concat(response.body.secure_url);
+
+                    return {
+                        urls,
+                        uploadedFileCloudinaryUrl
+                    }
                 });
             }
         });
@@ -137,6 +147,7 @@ class UploadImage extends Component {
             description,
             origin,
             url,
+            urls,
             selectedObjTypeOption,
             selectedPotionTypeOption,
             selectedClassTypeOptions,
@@ -188,21 +199,21 @@ class UploadImage extends Component {
 
 
                                 <input
-                                    className="form-control required"
+                                    className="form-control"
                                     value={name}
                                     onChange={e => this.setState({ name: e.target.value })}
                                     type="text"
                                     placeholder="Nombre"
                                 />
                                 <textarea
-                                    className="form-control required"
+                                    className="form-control"
                                     value={description}
                                     onChange={e => this.setState({ description: e.target.value })}
                                     type="text"
                                     placeholder="Descripcion"
                                 />
                                 <input
-                                    className="form-control required"
+                                    className="form-control"
                                     value={origin}
                                     onChange={e => this.setState({ origin: e.target.value })}
                                     type="text"
@@ -214,7 +225,7 @@ class UploadImage extends Component {
                                 <Dropzone
                                     onDrop={this.onImageDrop.bind(this)}
                                     accept="image/*"
-                                    multiple={false}>
+                                    multiple={true}>
                                     {({ getRootProps, getInputProps }) => {
                                         return (
 
@@ -240,7 +251,7 @@ class UploadImage extends Component {
                                     }}
                                 </Dropzone>
 
-                                <div className="col-md-6 col-lg-4">
+{/*                                <div className="col-md-6 col-lg-4">
                                     {this.state.uploadedFileCloudinaryUrl === '' ? null :
                                         <div className="nk-image-box-1">
                                             <img src={this.state.uploadedFileCloudinaryUrl}/>
@@ -252,6 +263,21 @@ class UploadImage extends Component {
                                                 </div>
                                             </div>
                                         </div>}
+                                </div>*/}
+
+                                <div className="col-md-6 col-lg-4">
+                                    {this.state.uploadedFileCloudinaryUrl.map(item => (
+                                        <div key={item} className="nk-image-box-1">
+                                            <img src={item}/>
+                                            <div className="nk-image-box-overlay nk-image-box-center">
+                                                <div>
+                                                    <h6 className="nk-image-box-title h6">{item}</h6>
+                                                    <div
+                                                        className="nk-image-box-sub-title">{item}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
 
                                 <div className="nk-gap"></div>
@@ -260,7 +286,7 @@ class UploadImage extends Component {
 
                                 <Mutation
                                     mutation={IMAGE_MUTATION}
-                                    variables={{ name, description, origin, url }}
+                                    variables={{ name, description, origin, url, urls }}
                                     onCompleted={() => this.props.history.push('/gallery/1')}
                                     update={(store, { data: { uploadImage } }) => {
                                         const first = IMAGES_PER_PAGE;
@@ -366,7 +392,7 @@ class UploadImage extends Component {
 
                                 Nombre
                                 <input
-                                    className="form-control required"
+                                    className="form-control"
                                     value={name}
                                     onChange={e => this.setState({ name: e.target.value })}
                                     type="text"
