@@ -11,8 +11,9 @@ export const IMAGES_LIST_QUERY = gql`
             images {
                 id
                 name
-                url
+                urls
                 createdAt
+                category
                 description
                 origin
                 uploadedBy {
@@ -36,7 +37,7 @@ const NEW_IMAGES_SUBSCRIPTION = gql`
             node {
                 id
                 name
-                url
+                urls
                 createdAt
                 description
                 origin
@@ -91,7 +92,7 @@ class ImagesList extends Component {
         if (isGallery) {
             return data.imageList.images
         }
-        const rankedImages = data.imageList.links.slice();
+        const rankedImages = data.imageList.images.slice();
         rankedImages.sort((l1, l2) => l2.votes.length - l1.votes.length);
         return rankedImages
     };
@@ -134,8 +135,8 @@ class ImagesList extends Component {
         return (
             <Query query={IMAGES_LIST_QUERY} variables={this._getQueryVariables()}>
                 {({ loading, error, data, subscribeToMore }) => {
-                    if (loading) return <div>Cargando...</div>;
-                    if (error) return <div>Error</div>;
+                    if (loading) return <h3 className="nk-title-back">Cargando...</h3>;
+                    if (error) return <h3 className="nk-title-back">Hubo un error por favor intente mas tarde</h3>;
 
                     // this._subscribeToNewImages(subscribeToMore)
                     // this._subscribeToNewVotes(subscribeToMore)

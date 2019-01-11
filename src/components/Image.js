@@ -32,11 +32,11 @@ class Image extends Component {
             <div className="nk-blog-post">
                 <div className="nk-post-thumb">
                     <div className="nk-post-type">
-                        <span className="ion-image">{this.props.index + 1}. </span>
+                        <span className="ion-image"> Imagenes: { this.props.image.urls.length}. </span>
                     </div>
 
                     <Link to={`/image/${this.props.image.id }`} className="ml1 no-underline black">
-                        <img alt={this.props.image.name} src={this.props.image.url} className="nk-img-stretch"/>
+                        <img alt={this.props.image.name} src={this.props.image.urls[0]} className="nk-img-stretch"/>
                     </Link>
 
                 </div>
@@ -62,11 +62,17 @@ class Image extends Component {
                         >
                             {voteImageMutation => (
                                 <div className="ml1 gray f11" onClick={voteImageMutation}>
-                                    ▲ Guardar en Favoritos
+                                    <span className="like-icon ion-android-favorite-outline"> </span>
+                                    Guardar en Favoritos
                                 </div>
                             )}
                         </Mutation>
                     )}
+
+
+                    <div>
+                        {this.props.image.category}
+                    </div>
 
 
                     <div>
@@ -87,53 +93,6 @@ class Image extends Component {
                     </div>
                 </div>
             </div>
-
-
-
-
-
-            // <div className="flex mt2 items-start">
-            //         <div className="flex items-center">
-            //             <span className="gray">{this.props.index + 1}.</span>
-            //             {authToken && (
-            //                 <Mutation
-            //                     mutation={VOTE_IMAGE_MUTATION}
-            //                     variables={{ imageId: this.props.image.id }}
-            //                     update={(store, { data: { voteImage } }) =>
-            //                         this.props.updateStoreAfterVote(store, voteImage, this.props.image.id)
-            //                     }
-            //                 >
-            //                     {voteImageMutation => (
-            //                         <div className="ml1 gray f11" onClick={voteImageMutation}>
-            //                             ▲
-            //                         </div>
-            //                     )}
-            //                 </Mutation>
-            //             )}
-            //         </div>
-            //         <div className="ml1">
-            //             <div>
-            //                 <Link to={`/image/${this.props.image.id }`} className="ml1 no-underline black">
-            //                     {this.props.image.name}
-            //                     {this.props.image.id}
-            //                 </Link>
-            //             </div>
-            //             <img alt={this.props.image.name} width="200px" src={this.props.image.url}></img>
-            //             <div>
-            //                 {this.props.image.description}
-            //             </div>
-            //             <div className="f6 lh-copy gray">
-            //                 Creado en server: {this.props.image.origin}
-            //             </div>
-            //             <div className="f6 lh-copy gray">
-            //                 {this.props.image.votes.length} votes |
-            //                 Subido por {this.props.image.uploadedBy
-            //                 ? this.props.image.uploadedBy.name
-            //                 : 'Unknown'}{' | '}
-            //                 {timeDifferenceForDate(this.props.image.createdAt)}
-            //             </div>
-            //         </div>
-            //     </div>
         )
     }
 

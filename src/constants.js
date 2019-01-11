@@ -74,6 +74,17 @@ export const RACES_TYPE = [
     { label: 'Enano', value: 'Enano' },
 ]
 
+export const CATEGORIES_TYPE = [
+    { label: 'Cabezas', value: 'Cabezas' },
+    { label: 'Armaduras', value: 'Armaduras' },
+    { label: 'Cascos', value: 'Cascos' },
+    { label: 'Armas', value: 'Armas' },
+    { label: 'Npcs', value: 'Npcs' },
+    { label: 'Items inventario', value: 'Items inventario' },
+    { label: 'Ambientacion', value: 'Ambientacion' },
+    { label: 'Interfaces', value: 'Interfaces' },
+]
+
 
 
 

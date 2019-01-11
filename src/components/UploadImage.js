@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { IMAGES_LIST_QUERY } from './ImageList'
-import { IMAGES_PER_PAGE, OBJ_TYPE, POTION_TYPE, CLASS_TYPE } from '../constants'
+import { IMAGES_PER_PAGE, OBJ_TYPE, POTION_TYPE, CLASS_TYPE, CATEGORIES_TYPE } from '../constants'
 // import { CloudinaryContext, Transformation, Image } from 'cloudinary-react'
 import Dropzone from 'react-dropzone'
 import request from 'superagent'
@@ -11,15 +11,16 @@ import Select from 'react-select';
 const Checkbox = props => <input type="checkbox" {...props} />;
 
 const IMAGE_MUTATION = gql`
-    mutation ImageMutation($name: String!, $description: String!, $origin: String!, $url: String!, $urls: [String!]!) {
-        uploadImage(name: $name, description: $description, origin: $origin, url: $url, urls: $urls) {
+    mutation ImageMutation($name: String!, $description: String!, $origin: String!, $urls: [String!]!, $category: String!, $indexingData: String) {
+        uploadImage(name: $name, description: $description, origin: $origin, urls: $urls, category: $category, indexingData: $indexingData) {
             id
             name
             createdAt
             origin
-            url
+            category
             urls
             description
+            indexingData
         }
     }
 `
@@ -28,11 +29,12 @@ class UploadImage extends Component {
     state = {
         selectedObjTypeOption: null,
         selectedPotionTypeOption: null,
-        uploadedFileCloudinaryUrl: [],
+        selectedCategoryOption: null,
+        uploadedFileCloudinaryUrls: [],
+        indexingData: '',
         name: '',
         description: '',
         origin: '',
-        url: 'asd',
         urls: [],
         objType: '',
         tipoPocion: '',
@@ -68,6 +70,7 @@ class UploadImage extends Component {
         nosecae: '',
         newbie: '',
         isDatearFormOpen: false,
+        isIndexingFormOpen: false,
     };
 
     toggleAgarrable = () =>
@@ -88,6 +91,9 @@ class UploadImage extends Component {
     toggleIsDateaForm = () =>
         this.setState(state => ({ isDatearFormOpen: !state.isDatearFormOpen }));
 
+    toggleIsIndexingForm = () =>
+        this.setState(state => ({ isIndexingFormOpen: !state.isIndexingFormOpen }));
+
     handleObjTypeChangeSelect = (selectedObjTypeOption) => {
         this.setState({ selectedObjTypeOption });
         this.setState({ objType: selectedObjTypeOption.value })
@@ -104,6 +110,12 @@ class UploadImage extends Component {
         this.setState({ selectedClassTypeOption });
         this.setState({ clasesProhibidas: selectedClassTypeOption.value })
         console.log(`Option selected:`, selectedClassTypeOption);
+    }
+
+    handleCategoryChangeSelect = (selectedCategoryOption) => {
+        this.setState({ selectedCategoryOption });
+        this.setState({ category: selectedCategoryOption.value })
+        console.log(`Option selected:`, selectedCategoryOption);
     }
 
     onImageDrop(files) {
@@ -130,11 +142,11 @@ class UploadImage extends Component {
                 this.setState(state => {
 
                     const urls = state.urls.concat(response.body.secure_url);
-                    const uploadedFileCloudinaryUrl = state.uploadedFileCloudinaryUrl.concat(response.body.secure_url);
+                    const uploadedFileCloudinaryUrls = state.uploadedFileCloudinaryUrls.concat(response.body.secure_url);
 
                     return {
                         urls,
-                        uploadedFileCloudinaryUrl
+                        uploadedFileCloudinaryUrls
                     }
                 });
             }
@@ -146,11 +158,12 @@ class UploadImage extends Component {
             name,
             description,
             origin,
-            url,
             urls,
             selectedObjTypeOption,
             selectedPotionTypeOption,
+            selectedCategoryOption,
             selectedClassTypeOptions,
+            category,
             objType,
             tipoPocion,
             clasesProhibidas,
@@ -183,7 +196,8 @@ class UploadImage extends Component {
             vGrande,
             clave,
             nosecae,
-            newbie
+            newbie,
+            indexingData
         } = this.state
         return (
             <div>
@@ -196,6 +210,23 @@ class UploadImage extends Component {
                             <div className="nk-box-3 bg-dark-1">
                                 <h2 className="nk-title h3 text-center">Subir Grafico</h2>
                                 <div className="nk-gap-1"></div>
+
+                                <Select
+                                    value={selectedCategoryOption}
+                                    onChange={this.handleCategoryChangeSelect}
+                                    placeholder="Categoria"
+                                    theme={(theme) => ({
+                                        ...theme,
+                                        colors: {
+                                            ...theme.colors,
+                                            neutral0: '#0b0b0b',
+                                            primary25: 'grey',
+                                            primary: 'cyan',
+                                        },
+                                    })}
+
+                                    options={CATEGORIES_TYPE}
+                                />
 
 
                                 <input
@@ -239,43 +270,33 @@ class UploadImage extends Component {
                                                         <i className="ion-paintbrush"></i>
                                                     </div>
 
-                                                    Haz click aqui o arrastra los archivos hacia esta ventana para subir
-                                                    las imagenes
+                                                    <span>Haz click aqui o arrastra los archivos hacia esta ventana para subir
+                                                    las imagenes.</span>
+                                                    <br/>
+                                                    <span>Recuerda subir todas las imagenes juntas de un mismo grafico para que sea mas facil luego encontrarlas y descargarlas</span>
+
                                                     <div className="nk-gap"></div>
 
                                                     <a className="nk-btn nk-btn-lg link-effect-4 nk-btn-circle">SUBIR
-                                                        IMAGEN</a>
+                                                        IMAGEN/ES</a>
                                                 </div>
                                             </div>
                                         )
                                     }}
                                 </Dropzone>
 
-{/*                                <div className="col-md-6 col-lg-4">
-                                    {this.state.uploadedFileCloudinaryUrl === '' ? null :
-                                        <div className="nk-image-box-1">
-                                            <img src={this.state.uploadedFileCloudinaryUrl}/>
-                                            <div className="nk-image-box-overlay nk-image-box-center">
-                                                <div>
-                                                    <h6 className="nk-image-box-title h6">{this.state.uploadedFile.name}</h6>
-                                                    <div
-                                                        className="nk-image-box-sub-title">{this.state.uploadedFile.name}</div>
-                                                </div>
-                                            </div>
-                                        </div>}
-                                </div>*/}
-
                                 <div className="col-md-6 col-lg-4">
-                                    {this.state.uploadedFileCloudinaryUrl.map(item => (
+                                    {this.state.uploadedFileCloudinaryUrls.map(item => (
                                         <div key={item} className="nk-image-box-1">
                                             <img src={item}/>
                                             <div className="nk-image-box-overlay nk-image-box-center">
                                                 <div>
-                                                    <h6 className="nk-image-box-title h6">{item}</h6>
                                                     <div
                                                         className="nk-image-box-sub-title">{item}</div>
                                                 </div>
                                             </div>
+                                            <div className="nk-gap-4"></div>
+
                                         </div>
                                     ))}
                                 </div>
@@ -284,31 +305,9 @@ class UploadImage extends Component {
                                 <div className="nk-form-response-success"></div>
                                 <div className="nk-form-response-error"></div>
 
-                                <Mutation
-                                    mutation={IMAGE_MUTATION}
-                                    variables={{ name, description, origin, url, urls }}
-                                    onCompleted={() => this.props.history.push('/gallery/1')}
-                                    update={(store, { data: { uploadImage } }) => {
-                                        const first = IMAGES_PER_PAGE;
-                                        const skip = 0;
-                                        const orderBy = 'createdAt_DESC';
-                                        const data = store.readQuery({
-                                            query: IMAGES_LIST_QUERY,
-                                            variables: { first, skip, orderBy }
-                                        });
-                                        data.imageList.images.unshift(uploadImage);
-                                        store.writeQuery({
-                                            query: IMAGES_LIST_QUERY,
-                                            data,
-                                            variables: { first, skip, orderBy }
-                                        });
-                                    }}
-                                >
-                                    {imageMutation => <button className="nk-btn nk-btn-lg link-effect-4"
-                                                              onClick={imageMutation}>Enviar</button>}
-                                </Mutation>
 
                                 <button className="nk-btn nk-btn-lg link-effect-4" onClick={this.toggleIsDateaForm}>Datear</button>
+                                <button className="nk-btn nk-btn-lg link-effect-4" onClick={this.toggleIsIndexingForm}>Indexar</button>
                             </div>
                         </div>
 
@@ -661,6 +660,77 @@ class UploadImage extends Component {
                         </div>
                     </div>
                 </div>}
+
+                {!this.state.isIndexingFormOpen ? null :
+                <div className="container">
+                    <div className="row vertical-gap">
+
+                        <div className="col-md-12">
+                            <div className="nk-box-3 bg-dark-1">
+                                <h2 className="nk-title h3 text-center">Indexar Grafico</h2>
+                                <div className="nk-gap-1"></div>
+
+                                <div className="nk-info-box bg-main-1">
+                                    <div className="nk-info-box-icon">
+                                        <i className="ion-information-circled"></i>
+                                    </div>
+                                    El formulario de indeacion aun esta en estado ALPHA por lo cual debe de ser usado siendo cuidadosamente pensando que valores se escriben
+                                    , se mejorara en proximas :)
+                                </div>
+
+                                <textarea
+                                    className="form-control"
+                                    value={indexingData}
+                                    onChange={e => this.setState({ indexingData: e.target.value })}
+                                    type="text"
+                                    placeholder="Ejemplo:
+
+                                                [OBJ1]
+                                                Name=Manzana Roja
+                                                GrhIndex=506
+                                                ObjType=1
+                                                Agarrable=0
+                                                MinHAM=10
+                                                Valor=2
+                                                Crucial=1
+                                    "
+                                />
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>}
+
+
+                <div className="container">
+                    {this.state.name && this.state.description && this.state.category && this.state.uploadedFileCloudinaryUrls.length > 0 && (
+                        <Mutation
+                            mutation={IMAGE_MUTATION}
+                            variables={{ name, description, origin, urls, category, indexingData }}
+                            onCompleted={() => this.props.history.push('/gallery/1')}
+                            update={(store, { data: { uploadImage } }) => {
+                                const first = IMAGES_PER_PAGE;
+                                const skip = 0;
+                                const orderBy = 'createdAt_DESC';
+                                const data = store.readQuery({
+                                    query: IMAGES_LIST_QUERY,
+                                    variables: { first, skip, orderBy }
+                                });
+                                data.imageList.images.unshift(uploadImage);
+                                store.writeQuery({
+                                    query: IMAGES_LIST_QUERY,
+                                    data,
+                                    variables: { first, skip, orderBy }
+                                });
+                            }}
+                        >
+                            {imageMutation => <button className="nk-btn nk-btn-x2 nk-btn-block nk-btn-rounded nk-btn-color-main-1"
+                                                          onClick={imageMutation}>Enviar</button>}
+                        </Mutation>
+                    )}
+                </div>
+
 
 
             </div>
