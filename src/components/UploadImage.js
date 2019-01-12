@@ -7,6 +7,8 @@ import Dropzone from 'react-dropzone'
 import request from 'superagent'
 import Select from 'react-select';
 
+const CLOUDINARY_PRESET = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET_PROD : process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
+
 const IMAGE_MUTATION = gql`
     mutation ImageMutation($name: String!, $description: String!, $origin: String!, $urls: [String!]!, $category: String!, $indexingData: String, $dateoData: String) {
         uploadImage(name: $name, description: $description, origin: $origin, urls: $urls, category: $category, indexingData: $indexingData, dateoData: $dateoData) {
@@ -63,7 +65,7 @@ class UploadImage extends Component {
 
     handleImageUpload(file) {
         let upload = request.post(process.env.REACT_APP_CLOUDINARY_UPLOAD_URL)
-            .field('upload_preset', process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET)
+            .field('upload_preset', CLOUDINARY_PRESET)
             .field('file', file);
 
         upload.end((err, response) => {

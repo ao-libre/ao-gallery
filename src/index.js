@@ -13,8 +13,11 @@ import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
 import { AUTH_TOKEN } from './constants'
 
+const HTTP_PRISMA = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_PRISMA_HTTP_LINK_PROD : process.env.REACT_APP_PRISMA_HTTP_LINK;
+const WS_PRISMA = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_PRISMA_WS_LINK_PROD : process.env.REACT_APP_PRISMA_WS_LINK;
+
 const httpLink = createHttpLink({
-    uri: process.env.REACT_APP_PRISMA_HTTP_LINK
+    uri: HTTP_PRISMA
 })
 
 const authLink = setContext((_, { headers }) => {
@@ -28,7 +31,7 @@ const authLink = setContext((_, { headers }) => {
 })
 
 const wsLink = new WebSocketLink({
-  uri: process.env.REACT_APP_PRISMA_WS_LINK,
+  uri: WS_PRISMA,
   options: {
     reconnect: true,
     connectionParams: {
