@@ -2,27 +2,8 @@ import React, { Component } from 'react'
 import { AUTH_TOKEN } from '../constants'
 import { timeDifferenceForDate } from '../utils'
 import { Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
 import { Link } from "react-router-dom";
-
-const VOTE_IMAGE_MUTATION = gql`
-    mutation VoteImageMutation($imageId: ID!) {
-        voteImage(imageId: $imageId) {
-            id
-            image {
-                votes {
-                    id
-                    user {
-                        id
-                    }
-                }
-            }
-            user {
-                id
-            }
-        }
-    }
-`
+import { VOTE_IMAGE_MUTATION } from '../utils/mutations'
 
 class Image extends Component {
     render() {
@@ -32,11 +13,11 @@ class Image extends Component {
             <div className="nk-blog-post">
                 <div className="nk-post-thumb">
                     <div className="nk-post-type">
-                        <span className="ion-image"> Imagenes: { this.props.image.urls.length}. </span>
+                        <span className="ion-image"> Imagenes: {this.props.image.urls.length}. </span>
                     </div>
 
-                    <Link to={`/image/${this.props.image.id }`} className="ml1 no-underline black">
-                        <img alt={this.props.image.name} src={this.props.image.urls[0]} className="nk-img-stretch"/>
+                    <Link to={`/image/${this.props.image.id}`} className="ml1 no-underline black">
+                        <img alt={this.props.image.name} src={this.props.image.urls[0]} className="nk-img-stretch" />
                     </Link>
 
                 </div>
@@ -81,8 +62,8 @@ class Image extends Component {
 
                     <div>
                         Subido por {this.props.image.uploadedBy
-                        ? this.props.image.uploadedBy.name
-                        : 'Unknown'}
+                            ? this.props.image.uploadedBy.name
+                            : 'Unknown'}
                     </div>
 
                     <div className="nk-post-text">

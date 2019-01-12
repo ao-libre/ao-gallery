@@ -177,20 +177,19 @@ class ImagesList extends Component {
 
                                 {isGallery && (
                                     <div className="nk-pagination nk-pagination-center">
-                                        <span className="nk-pagination-prev nk-icon-arrow-left"
-                                              onClick={this._previousPage}></span>
+
                                         <nav>
-                                            <span>Viendo Imagenes {this.props.match.params.page} a {pageIndex}</span>
+                                            <span className="nk-pagination-prev nk-icon-arrow-left" onClick={this._previousPage}></span>
+                                            <span>Viendo Pagina {this.props.match.params.page} de {data.imageList.count / 9 }</span>
 
                                             {/*<a href="#">1</a>*/}
                                             {/*<a href="#">2</a>*/}
                                             {/*<a className="nk-pagination-current-white" href="#">3</a>*/}
                                             {/*<span>...</span>*/}
                                             {/*<a href="#">14</a>*/}
+                                            <span className="nk-pagination-next nk-icon-arrow-right" onClick={() => this._nextPage(data)}></span>
                                         </nav>
 
-                                        <span className="nk-pagination-next nk-icon-arrow-right"
-                                              onClick={() => this._nextPage(data)}></span>
                                     </div>
                                 )}
 

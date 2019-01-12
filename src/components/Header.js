@@ -46,7 +46,7 @@ class Header extends Component {
                                 <Link to="/"> Home </Link> |
                                 {/*<Link to="/gallery/1"> Galeria </Link> |*/}
                                 <Link to="/searchimages"> Buscar </Link> |
-                                <Link to="/top"> Top Graficos </Link> |
+                                {/* <Link to="/top"> Top Graficos </Link> | */}
 
                                 {authToken && (
                                     <Link to="/uploadimage"> Subir Grafico </Link>
