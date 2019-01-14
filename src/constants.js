@@ -83,6 +83,7 @@ export const CATEGORIES_TYPE = [
     { label: 'Items inventario', value: 'Items inventario' },
     { label: 'Ambientacion', value: 'Ambientacion' },
     { label: 'Interfaces', value: 'Interfaces' },
+    { label: 'Monturas', value: 'Monturas' },
 ]
 
 
