@@ -66,9 +66,12 @@ class Image extends Component {
                             : 'Unknown'}
                     </div>
 
+                    <div>
+                        Creado en server: {this.props.image.origin}
+                    </div>
+
                     <div className="nk-post-text">
                         <p>
-                            Creado en server: {this.props.image.origin}
                             {this.props.image.description}
                         </p>
                     </div>
