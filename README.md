@@ -1,4 +1,24 @@
+# Galeria Graficos Argentum Online
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+To make it work you should create an `.env` file with the following information:
+```
+REACT_APP_CLOUDINARY_UPLOAD_URL=CHANGE_ME
+
+REACT_APP_CLOUDINARY_UPLOAD_PRESET_PROD=CHANGE_ME
+REACT_APP_PRISMA_HTTP_LINK_PROD=https://CHANGE_ME
+REACT_APP_PRISMA_WS_LINK_PROD=wss://CHANGE_ME
+
+REACT_APP_CLOUDINARY_UPLOAD_PRESET=CHANGE_ME
+REACT_APP_PRISMA_WS_LINK=ws://localhost:4000
+REACT_APP_PRISMA_HTTP_LINK=http://localhost:4000
+```
+
+You need to create a `Cloduinary` account in order to use this application.
+https://cloudinary.com/
+
+You also need to run the backend application:
+https://github.com/ao-libre/ao-gallery-server
 
 ## Available Scripts
 
