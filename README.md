@@ -14,7 +14,7 @@ REACT_APP_PRISMA_WS_LINK=ws://localhost:4000
 REACT_APP_PRISMA_HTTP_LINK=http://localhost:4000
 ```
 
-You need to create a `Cloduinary` account in order to use this application.
+You need to create a `Cloudinary` account in order to use this application.
 https://cloudinary.com/
 
 You also need to run the backend application:
