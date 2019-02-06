@@ -16,6 +16,7 @@ export const IMAGES_LIST_QUERY = gql`
                 category
                 description
                 origin
+                isDeleted
                 uploadedBy {
                     id
                     name
@@ -89,6 +90,9 @@ class ImagesList extends Component {
 
     _getImagesToRender = data => {
         const isGallery = this.props.location.pathname.includes('gallery');
+        //TODO: Make filter in the query instead of here.
+        data.imageList.images = data.imageList.images.filter((image) => image.isDeleted === "false");
+
         if (isGallery) {
             return data.imageList.images
         }
